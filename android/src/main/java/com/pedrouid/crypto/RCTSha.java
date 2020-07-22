@@ -87,7 +87,7 @@ public class RCTSha extends ReactContextBaseJavaModule {
     public void shaUtf8(String data, String algorithm, Promise promise) throws Exception {
         try {
             byte[] digest = this.sha(data.getBytes(), algorithm);
-            promise.resolve(Base64.encodeToString(digest, Base64.DEFAULT));
+            promise.resolve(Util.bytesToHex(digest));
         } catch (Exception e) {
             promise.reject("-1", e.getMessage());
         }
