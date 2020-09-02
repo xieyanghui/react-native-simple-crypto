@@ -23,6 +23,8 @@
         return kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA256;
     } else if ([hash isEqualToString:@"SHA384"]) {
         return kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA384;
+    } else if ([hash isEqualToString:@"SHA512"]) {
+        return kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA512;
     } else {
         return kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA512;
     }
