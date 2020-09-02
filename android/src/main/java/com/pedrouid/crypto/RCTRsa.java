@@ -38,8 +38,10 @@ public class RCTRsa extends ReactContextBaseJavaModule {
         return "SHA256withRSA";
     } else if (hash.equals("SHA384")) {
         return "SHA384withRSA";
+    } else if (hash.equals("SHA512")) {
+        return "SHA512withRSA";
     } else {
-        return "SHA1withRSA";
+        return "SHA512withRSA";
     }
 }
 
