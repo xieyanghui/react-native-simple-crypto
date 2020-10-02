@@ -1,11 +1,18 @@
 {
-  "name": "react-native-simple-crypto",
-  "version": "0.2.13",
+  "name": "@react-native-cryptocurrencies/react-native-simple-crypto",
+  "version": "0.3.1",
   "description": "A simpler React-Native crypto library",
   "main": "index.js",
   "author": "Gary Button <gary.button.public@gmail.com>",
-  "homepage": "https://github.com/ghbutton/react-native-simple-crypto",
+  "homepage": "https://github.com/react-native-cryptocurrencies/react-native-simple-crypto",
   "license": "MIT",
+  "contributors": [
+    {
+      "name": "Jorge Duarte",
+      "email": "info@malagadev.com",
+      "url": "https://www.malagadev.com/"
+    }
+  ],
   "keywords": [
     "react-native",
     "react-component",

@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-import base64js from 'base64-js';
-import hexLite from 'hex-lite';
-import { NativeModules } from 'react-native';
+import base64js from "base64-js";
+import hexLite from "hex-lite";
+import { NativeModules } from "react-native";
 
 function convertArrayBufferToUtf8(arrayBuffer) {
   const array = new Uint8Array(arrayBuffer);
@@ -23,15 +23,15 @@ function convertArrayBufferToUtf8(arrayBuffer) {
       chars.push(
         String.fromCharCode(
           ((byte & 0x0f) << 12) |
-          ((array[i + 1] & 0x3f) << 6) |
-          (array[i + 2] & 0x3f)
+            ((array[i + 1] & 0x3f) << 6) |
+            (array[i + 2] & 0x3f)
         )
       );
       i += 3;
     }
   }
 
-  return chars.join('');
+  return chars.join("");
 }
 
 function convertUtf8ToArrayBuffer(utf8) {
@@ -66,11 +66,13 @@ const convertArrayBufferToHex = hexLite.fromBuffer;
 const convertHexToArrayBuffer = hexLite.toBuffer;
 
 async function randomBytes(length) {
-  return convertBase64ToArrayBuffer(await NativeModules.RNRandomBytes.randomBytes(length));
+  return convertBase64ToArrayBuffer(
+    await NativeModules.RNRandomBytes.randomBytes(length)
+  );
 }
 
 async function SHAWrapper(data, algorithm) {
-  if (typeof data === 'string') {
+  if (typeof data === "string") {
     return NativeModules.Sha.shaUtf8(data, algorithm);
   } else {
     const dataBase64 = convertArrayBufferToBase64(data);
@@ -80,29 +82,48 @@ async function SHAWrapper(data, algorithm) {
   }
 }
 
+async function SHAWrapper_b64(dataBase64, algorithm) {
+  const result = await NativeModules.Sha.shaBase64(dataBase64, algorithm);
+  return result;
+}
+
 const AES = {
-  encrypt: async function (textArrayBuffer, keyArrayBuffer, ivArrayBuffer) {
+  encrypt: async function(textArrayBuffer, keyArrayBuffer, ivArrayBuffer) {
     const textBase64 = convertArrayBufferToBase64(textArrayBuffer);
     const keyHex = convertArrayBufferToHex(keyArrayBuffer);
     const ivHex = convertArrayBufferToHex(ivArrayBuffer);
-    return convertBase64ToArrayBuffer(await NativeModules.Aes.encrypt(textBase64, keyHex, ivHex));
+    return convertBase64ToArrayBuffer(
+      await NativeModules.Aes.encrypt(textBase64, keyHex, ivHex)
+    );
   },
-  decrypt: async function (cipherTextArrayBuffer, keyArrayBuffer, ivArrayBuffer) {
+  decrypt: async function(
+    cipherTextArrayBuffer,
+    keyArrayBuffer,
+    ivArrayBuffer
+  ) {
     const cipherTextBase64 = convertArrayBufferToBase64(cipherTextArrayBuffer);
     const keyHex = convertArrayBufferToHex(keyArrayBuffer);
     const ivHex = convertArrayBufferToHex(ivArrayBuffer);
-    return convertBase64ToArrayBuffer(await NativeModules.Aes.decrypt(cipherTextBase64, keyHex, ivHex));
+    return convertBase64ToArrayBuffer(
+      await NativeModules.Aes.decrypt(cipherTextBase64, keyHex, ivHex)
+    );
   }
 };
 
 const SHA = {
-  sha1: data => SHAWrapper(data, 'SHA-1'),
-  sha256: data => SHAWrapper(data, 'SHA-256'),
-  sha512: data => SHAWrapper(data, 'SHA-512')
+  sha1: data => SHAWrapper(data, "SHA-1"),
+  sha256: data => SHAWrapper(data, "SHA-256"),
+  sha512: data => SHAWrapper(data, "SHA-512")
+};
+
+const SHA_b64 = {
+  sha1: data => SHAWrapper_b64(data, "SHA-1"),
+  sha256: data => SHAWrapper_b64(data, "SHA-256"),
+  sha512: data => SHAWrapper_b64(data, "SHA-512")
 };
 
 const HMAC = {
-  hmac256: async function (textArrayBuffer, keyArrayBuffer) {
+  hmac256: async function(textArrayBuffer, keyArrayBuffer) {
     const textHex = convertArrayBufferToHex(textArrayBuffer);
     const keyHex = convertArrayBufferToHex(keyArrayBuffer);
     const signatureHex = await NativeModules.Hmac.hmac256(textHex, keyHex);
@@ -111,15 +132,15 @@ const HMAC = {
 };
 
 const PBKDF2 = {
-  hash: async function (password, salt, iterations, keyLength, algorithm) {
+  hash: async function(password, salt, iterations, keyLength, algorithm) {
     let passwordToHash = password;
     let saltToHash = salt;
 
-    if (typeof password === 'string') {
+    if (typeof password === "string") {
       passwordToHash = convertUtf8ToArrayBuffer(password);
     }
 
-    if (typeof salt === 'string') {
+    if (typeof salt === "string") {
       saltToHash = convertUtf8ToArrayBuffer(salt);
     }
 
@@ -150,6 +171,7 @@ const utils = {
 export default {
   AES,
   SHA,
+  SHA_b64,
   HMAC,
   PBKDF2,
   RSA,
