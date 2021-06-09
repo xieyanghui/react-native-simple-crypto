@@ -1,3 +1,12 @@
+This is a Fork of react-native-simple-crypto but exporting a new function for the `SHA` function using a base64-encoded string as input.
+
+There is an error pending to be resolved between the Android native module and this component while transmiting the data encoded in binary (as far as I can remember).
+
+*DISCLAIMER: This is a partial release extremely experimental (as a result of modifying some existing modules to make them work for a customer) and it's definitively not suitable for production usage unless the incorporated code is throughly checked. I will try to revamp these libraries fully adapted for RN ready for production as soon as I have time.*
+
+## original README:
+
+
 # React Native Simple Crypto [![npm version](https://badge.fury.io/js/react-native-simple-crypto.svg)](https://badge.fury.io/js/react-native-simple-crypto)
 
 A simpler React-Native crypto library
