@@ -15,7 +15,7 @@
 #import "React/RCTBridgeModule.h" // Required when used as a Pod in a Swift project
 #endif
 
-@implementation RNRandomBytes
+@implementation RNRandomdBytes
 
 RCT_EXPORT_MODULE()
 

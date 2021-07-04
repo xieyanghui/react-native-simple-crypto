@@ -22,7 +22,7 @@ class RandomBytesModule extends ReactContextBaseJavaModule {
 
   @Override
   public String getName() {
-    return "RNRandomBytes";
+    return "RNRandomdBytes";
   }
 
   @ReactMethod
